@@ -1,23 +1,67 @@
 package com.nikm3.sketchpad
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-import com.nikm3.sketchpad.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import yuku.ambilwarna.AmbilWarnaDialog
+import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var canvas: MyCanvasView
+    private lateinit var colorButton: FloatingActionButton
+    private lateinit var backgroundButton: FloatingActionButton
+    private lateinit var trashButton: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        val myCanvasView = MyCanvasView(this)
-        myCanvasView.systemUiVisibility = SYSTEM_UI_FLAG_FULLSCREEN
-        myCanvasView.contentDescription = getString(R.string.canvasContentDescription)
-        setContentView(myCanvasView)
+        canvas = findViewById(R.id.myCanvasView)
+        colorButton = findViewById(R.id.paintColorButton)
+        backgroundButton = findViewById(R.id.backgroundColorButton)
+        trashButton = findViewById(R.id.trashButton)
 
+        colorButton.setOnClickListener {
+            val obj = object : OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog?) {
+                    /* Intentionally left blank */
+                }
+
+                override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                    canvas.setPaintColor(color)
+                }
+
+            }
+            AmbilWarnaDialog(
+                this,
+                canvas.getPaintColor(),
+                obj
+            ).show()
+        }
+
+
+
+        backgroundButton.setOnClickListener {
+            val obj = object : OnAmbilWarnaListener {
+                override fun onCancel(dialog: AmbilWarnaDialog?) {
+                    /* Intentionally left blank */
+                }
+
+                override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
+                    canvas.setBackgroundColor(color)
+                }
+
+            }
+            AmbilWarnaDialog(
+                this,
+                canvas.getBackgroundColor(),
+                obj
+            ).show()
+        }
+
+        trashButton.setOnClickListener {
+            canvas.reset()
+        }
     }
 }

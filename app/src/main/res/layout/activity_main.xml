@@ -6,13 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.nikm3.sketchpad.MyCanvasView
+        android:id="@+id/myCanvasView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/paintColorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/paint_button_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/paint_icon"
+        tools:ignore="KeyboardInaccessibleWidget" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/backgroundColorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/background_button_description"
+        app:layout_constraintBottom_toBottomOf="@+id/myCanvasView"
+        app:layout_constraintEnd_toStartOf="@+id/paintColorButton"
+        app:srcCompat="@drawable/paper_icon"
+        tools:ignore="KeyboardInaccessibleWidget" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trashButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/trash_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        tools:ignore="KeyboardInaccessibleWidget" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

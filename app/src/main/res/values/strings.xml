@@ -2,5 +2,8 @@
     <string name="app_name">SketchPad</string>
     <string name="canvasContentDescription">Mini Paint is a simple line drawing app.
    Drag your fingers to draw. Rotate the phone to clear.</string>
+    <string name="background_button_description">Change the color of the background</string>
+    <string name="paint_button_description">Change your paint color</string>
+    <string name="trash_button">Clear your current drawings</string>
 
 </resources>
