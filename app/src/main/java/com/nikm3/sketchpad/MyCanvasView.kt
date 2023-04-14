@@ -1,21 +1,28 @@
 package com.nikm3.sketchpad
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
 
-class MyCanvasView(context: Context) : View(context) {
+class MyCanvasView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
-    private val backgroundColor = ResourcesCompat.getColor(resources, R.color.orange, null)
-    private val drawColor = ResourcesCompat.getColor(resources, R.color.yellow, null)
+    private var backgroundColor = ResourcesCompat.getColor(resources, R.color.off_white, null)
+    private var drawColor = ResourcesCompat.getColor(resources, R.color.black, null)
+
     // Set up the paint with which to draw.
     private val paint = Paint().apply {
         color = drawColor
@@ -37,10 +44,7 @@ class MyCanvasView(context: Context) : View(context) {
 
     override fun onSizeChanged(width: Int, height: Int, oldWidth: Int, oldHeight: Int) {
         super.onSizeChanged(width, height, oldWidth, oldHeight)
-        extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(backgroundColor)
-
+        reset()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -48,6 +52,7 @@ class MyCanvasView(context: Context) : View(context) {
         canvas.drawBitmap(extraBitmap, 0f, 0f, null)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         motionTouchEventX = event.x
         motionTouchEventY = event.y
@@ -85,6 +90,30 @@ class MyCanvasView(context: Context) : View(context) {
     private fun touchUp() {
         // Reset the path so it doesn't get drawn again.
         path.reset()
+    }
+
+    fun getPaintColor(): Int {
+        return paint.color
+    }
+
+    fun setPaintColor(newColor: Int) {
+        paint.color = newColor
+    }
+
+    fun getBackgroundColor(): Int {
+        return backgroundColor
+    }
+
+    fun reset() {
+        extraBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        extraCanvas = Canvas(extraBitmap)
+        this.setBackgroundColor(backgroundColor)
+        invalidate()
+    }
+
+    override fun setBackgroundColor(color: Int) {
+        super.setBackgroundColor(color)
+        backgroundColor = color
     }
 
     companion object {
