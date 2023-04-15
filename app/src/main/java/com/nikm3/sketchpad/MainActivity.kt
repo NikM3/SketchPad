@@ -40,8 +40,6 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
 
-
-
         backgroundButton.setOnClickListener {
             val obj = object : OnAmbilWarnaListener {
                 override fun onCancel(dialog: AmbilWarnaDialog?) {
